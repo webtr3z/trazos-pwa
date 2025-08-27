@@ -42,11 +42,13 @@ export interface NFTFormData {
 interface DynamicProductFormProps {
   onSubmit: (data: NFTFormData) => void;
   onCancel: () => void;
+  isMinting?: boolean;
 }
 
 export function DynamicProductForm({
   onSubmit,
   onCancel,
+  isMinting = false,
 }: DynamicProductFormProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -350,14 +352,19 @@ export function DynamicProductForm({
           >
             Cancelar
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button type="submit" disabled={isSubmitting || isMinting}>
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Creando Producto...
               </>
+            ) : isMinting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Preparando Wallet...
+              </>
             ) : (
-              "Crear Producto"
+              "Nuevo Producto"
             )}
           </Button>
         </div>

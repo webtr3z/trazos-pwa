@@ -10,6 +10,7 @@ export interface Product {
   tokenId?: string;
   transactionHash?: string;
   metadataUri?: string;
+  mintingStatus?: "pending" | "submitted" | "confirmed" | "failed";
 }
 
 export interface ProductNft {
