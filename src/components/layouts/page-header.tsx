@@ -17,9 +17,14 @@ export function PageHeader() {
         <CardContent className="p-6">
           <div className="text-center space-y-4">
             <h1 className="text-7xl font-bold text-foreground">
-              <span>Web3</span> Auth Template
+              <span className="text-primary">Bazurto:</span> del mercado al
+              blockchain
             </h1>
-            <p className="text-base text-surface">
+            <p className="text-base text-surface max-w-[520px] mx-auto">
+              Convierte lo más sabroso y auténtico del Caribe en activos
+              digitales verificables con blockchain y QR únicos por producto.
+            </p>
+            {/* <p className="text-base text-surface">
               Leer{" "}
               <a
                 href="https://github.com/webtr3z/web3-auth-template"
@@ -30,7 +35,7 @@ export function PageHeader() {
                 </code>
               </a>{" "}
               para más información
-            </p>
+            </p> */}
             <div className="pt-8 flex gap-4 justify-center">
               <Button size="xl" onClick={handleRedirect}>
                 Comenzar

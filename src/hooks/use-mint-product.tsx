@@ -1,16 +1,14 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import {
-  mintProduct,
-  MintProductData,
-  MintProductResult,
-} from "@/services/thirdweb/mint-service";
+import { NFTFormData } from "@/components/pages/dynamic-product-form";
+import { mintProduct } from "@/engine/mint-product";
+import { ProductNft } from "@/types/product";
 
 export interface UseMintProductReturn {
   isMinting: boolean;
-  mintResult: MintProductResult | null;
-  mintProduct: (data: MintProductData, image: File) => Promise<void>;
+  mintResult: { success: boolean; error?: string } | null;
+  mintProduct: (data: NFTFormData, image: File) => Promise<void>;
   resetMintResult: () => void;
   error: string | null;
 }
@@ -21,22 +19,27 @@ export interface UseMintProductReturn {
  */
 export const useMintProduct = (): UseMintProductReturn => {
   const [isMinting, setIsMinting] = useState(false);
-  const [mintResult, setMintResult] = useState<MintProductResult | null>(null);
+  const [mintResult, setMintResult] = useState<{ success: boolean; error?: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleMintProduct = useCallback(
-    async (data: MintProductData, image: File) => {
+    async (data: NFTFormData, image: File) => {
       setIsMinting(true);
       setError(null);
       setMintResult(null);
 
       try {
-        const result = await mintProduct(data, image);
-        setMintResult(result);
+        // Convert NFTFormData to ProductNft format
+        const productNft: ProductNft = {
+          name: data.name,
+          description: data.description,
+          image: "", // This will be set by the upload process
+          attributes: data.properties,
+        };
 
-        if (!result.success) {
-          setError(result.error || "Failed to mint product");
-        }
+        // For now, we'll simulate the minting process
+        // The actual minting is handled in the dashboard page
+        setMintResult({ success: true });
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : "An unexpected error occurred";

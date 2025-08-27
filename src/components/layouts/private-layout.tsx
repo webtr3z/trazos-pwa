@@ -61,7 +61,7 @@ export function PrivateLayout({ children }: PrivateLayoutProps) {
                   alt="Logo"
                   width={164}
                   height={80}
-                  className="h-8 w-auto"
+                  className=""
                 />
               </div>
             </div>

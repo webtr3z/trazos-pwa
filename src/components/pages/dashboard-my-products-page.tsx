@@ -102,7 +102,7 @@ export default function DashboardMyProductsPage() {
           clearInterval(pollInterval);
         } catch (error) {
           // Token not found yet, continue polling
-          console.log(`Polling for product ${productId}...`);
+          // Continue polling silently
         }
       } catch (error) {
         console.error("Error checking token:", error);
@@ -182,13 +182,6 @@ export default function DashboardMyProductsPage() {
 
         // Start polling for transaction confirmation
         startTransactionPolling(newProduct.id, transactionHash);
-
-        console.log("\n\n============================");
-        console.log("[WALLET]", walletAddress);
-        console.log("[PRODUCT DATA]", productData);
-        console.log("[IMAGE HASH]", imageHash);
-        console.log("[TX HASH]", transactionHash);
-        console.log("============================\n\n");
       } catch (error) {
         console.error("Minting failed:", error);
         setProducts((prev) =>
