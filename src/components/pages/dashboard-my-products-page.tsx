@@ -20,71 +20,23 @@ import {
   Package,
   PlusCircle,
   X,
+  Loader2,
+  RefreshCw,
 } from "lucide-react";
-import { DynamicProductForm } from "./dynamic-product-form";
+import { DynamicProductForm, NFTFormData } from "./dynamic-product-form";
 import { ProductPreview } from "./product-preview";
 import { getProduct } from "@/engine/get-product";
 import { nextTokenToMint } from "@/engine/next-token-to-mint";
 import { useProducts } from "@/hooks/use-products";
-
-interface Product {
-  id: string;
-  name: string;
-  description?: string;
-  status: "draft" | "published" | "archived";
-  createdAt: Date;
-  updatedAt: Date;
-  customFields: Record<string, any>;
-}
-
-const mockProducts: Product[] = [
-  {
-    id: "1",
-    name: "Nike Air Max 270",
-    description:
-      "Zapatillas deportivas Nike Air Max 270 con tecnología Air Max",
-    status: "published",
-    createdAt: new Date("2024-01-15"),
-    updatedAt: new Date("2024-01-20"),
-    customFields: {
-      brand: "Nike",
-      size: "42",
-      color: "Black",
-      condition: "New",
-      image: "/images/nike-shoes.png",
-    },
-  },
-  {
-    id: "2",
-    name: "iPhone 15 Pro",
-    description: "Smartphone Apple iPhone 15 Pro con chip A17 Pro",
-    status: "draft",
-    createdAt: new Date("2024-01-18"),
-    updatedAt: new Date("2024-01-18"),
-    customFields: {
-      brand: "Apple",
-      storage: "256GB",
-      color: "Titanium",
-      condition: "Like New",
-      image: "/images/iphone.png",
-    },
-  },
-  {
-    id: "3",
-    name: "MacBook Air M2",
-    description: "Laptop Apple MacBook Air con chip M2 y 16GB de RAM",
-    status: "published",
-    createdAt: new Date("2024-01-10"),
-    updatedAt: new Date("2024-01-15"),
-    customFields: {
-      brand: "Apple",
-      processor: "M2",
-      ram: "16GB",
-      storage: "512GB",
-      image: "/images/macbook.png",
-    },
-  },
-];
+import { Product, ProductNft } from "@/types/product";
+import { mintProduct } from "@/engine/mint-product";
+import { uploadImage } from "@/engine/upload-image";
+import { useAtom } from "jotai";
+import { getWalletAddress } from "@/actions/auth";
+import { sendTransaction } from "thirdweb";
+import { client } from "@/services/thirdweb/client";
+import { useActiveAccount } from "thirdweb/react";
+import { Account } from "thirdweb/wallets";
 
 const getStatusColor = (status: Product["status"]) => {
   switch (status) {
@@ -116,10 +68,59 @@ export default function DashboardMyProductsPage() {
   const [previewingProduct, setPreviewingProduct] = useState<Product | null>(
     null,
   );
+  const [mintingLoading, setMintingLoading] = useState(false);
 
-  const { products, setProducts } = useProducts();
+  const { products, setProducts, refreshProducts, productsLoading } =
+    useProducts();
 
-  const handleProductSubmit = (productData: any) => {
+  const account = useActiveAccount() as Account;
+
+  const startTransactionPolling = async (
+    productId: string,
+    transactionHash: string,
+  ) => {
+    const pollInterval = setInterval(async () => {
+      try {
+        // Try to get the product from the contract using the next token ID
+        const nextToken = await nextTokenToMint();
+        const currentTokenId = (Number(nextToken) - 1).toString();
+
+        // Check if this token exists by trying to get its URI
+        try {
+          await getProduct(currentTokenId);
+          // If successful, transaction confirmed
+          setProducts((prev) =>
+            prev.map((p) =>
+              p.id === productId
+                ? { ...p, mintingStatus: "confirmed", tokenId: currentTokenId }
+                : p,
+            ),
+          );
+
+          // Don't refresh products here - just update the local state
+          // The product will remain visible with confirmed status
+          clearInterval(pollInterval);
+        } catch (error) {
+          // Token not found yet, continue polling
+          console.log(`Polling for product ${productId}...`);
+        }
+      } catch (error) {
+        console.error("Error checking token:", error);
+      }
+    }, 5000); // Poll every 5 seconds
+
+    // Stop polling after 10 minutes
+    setTimeout(() => {
+      clearInterval(pollInterval);
+      setProducts((prev) =>
+        prev.map((p) =>
+          p.id === productId ? { ...p, mintingStatus: "failed" } : p,
+        ),
+      );
+    }, 600000);
+  };
+
+  const handleProductSubmit = async (productData: NFTFormData) => {
     if (editingProduct) {
       // Update existing product
       const updatedProduct: Product = {
@@ -127,7 +128,7 @@ export default function DashboardMyProductsPage() {
         name: productData.name || editingProduct.name,
         description: productData.description || editingProduct.description,
         updatedAt: new Date(),
-        customFields: productData.customFields || editingProduct.customFields,
+        customFields: productData.properties || editingProduct.customFields,
       };
 
       setProducts(
@@ -135,17 +136,69 @@ export default function DashboardMyProductsPage() {
       );
       setEditingProduct(null);
     } else {
-      // Create new product
+      // Create new product with pending status
       const newProduct: Product = {
         id: Date.now().toString(),
         name: productData.name || "Producto sin nombre",
         status: "draft",
         createdAt: new Date(),
         updatedAt: new Date(),
-        customFields: productData.customFields || {},
+        customFields: productData.properties || {},
+        transactionHash: "",
+        mintingStatus: "pending",
       };
 
       setProducts([newProduct, ...products]);
+
+      try {
+        setMintingLoading(true);
+
+        // Upload Image and GET IPFS HASH
+        const imageHash = await uploadImage(productData.image as File);
+        const nftData: ProductNft = {
+          image: imageHash,
+          description: productData.description,
+          name: productData.name,
+          attributes: productData.properties,
+        };
+
+        // Get wallet address and mint
+        const walletAddress = await getWalletAddress();
+        const preparedTx = await mintProduct(walletAddress as string, nftData);
+
+        const { transactionHash } = await sendTransaction({
+          account: account,
+          transaction: preparedTx,
+        });
+
+        // Update product with transaction hash and start polling
+        setProducts((prev) =>
+          prev.map((p) =>
+            p.id === newProduct.id
+              ? { ...p, transactionHash, mintingStatus: "submitted" }
+              : p,
+          ),
+        );
+
+        // Start polling for transaction confirmation
+        startTransactionPolling(newProduct.id, transactionHash);
+
+        console.log("\n\n============================");
+        console.log("[WALLET]", walletAddress);
+        console.log("[PRODUCT DATA]", productData);
+        console.log("[IMAGE HASH]", imageHash);
+        console.log("[TX HASH]", transactionHash);
+        console.log("============================\n\n");
+      } catch (error) {
+        console.error("Minting failed:", error);
+        setProducts((prev) =>
+          prev.map((p) =>
+            p.id === newProduct.id ? { ...p, mintingStatus: "failed" } : p,
+          ),
+        );
+      } finally {
+        setMintingLoading(false);
+      }
     }
 
     setShowForm(false);
@@ -261,7 +314,7 @@ export default function DashboardMyProductsPage() {
               onCancel={
                 editingProduct ? handleCancelEdit : () => setShowForm(false)
               }
-              initialData={editingProduct}
+              isMinting={mintingLoading}
             />
           </CardContent>
         </Card>
@@ -270,9 +323,22 @@ export default function DashboardMyProductsPage() {
       {/* Products List */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">
-            Productos ({products.length})
-          </h2>
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl font-semibold">
+              Productos ({products.length})
+            </h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={refreshProducts}
+              disabled={productsLoading}
+              className="h-8 w-8 p-0"
+            >
+              <RefreshCw
+                className={`h-4 w-4 ${productsLoading ? "animate-spin" : ""}`}
+              />
+            </Button>
+          </div>
           <div className="flex gap-2">
             <Badge variant="outline">
               {products.filter((p) => p.status === "published").length}{" "}
@@ -284,7 +350,19 @@ export default function DashboardMyProductsPage() {
           </div>
         </div>
 
-        {products.length === 0 ? (
+        {productsLoading ? (
+          <Card className="text-center py-12">
+            <div className="flex items-center justify-center mb-4">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+            <h3 className="text-lg font-medium text-muted-foreground">
+              Cargando productos...
+            </h3>
+            <p className="text-muted-foreground">
+              Obteniendo información de la blockchain
+            </p>
+          </Card>
+        ) : products.length === 0 ? (
           <Card className="text-center py-12">
             <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-medium text-muted-foreground mb-2">
@@ -295,7 +373,7 @@ export default function DashboardMyProductsPage() {
             </p>
             <Button onClick={() => setShowForm(true)}>
               <Plus className="h-4 w-4 mr-2" />
-              Crear Producto
+              Nuevo Producto
             </Button>
           </Card>
         ) : (
@@ -331,51 +409,128 @@ export default function DashboardMyProductsPage() {
                         <Badge className={getStatusColor(product.status)}>
                           {getStatusText(product.status)}
                         </Badge>
+                        {product.mintingStatus && (
+                          <Badge
+                            variant="outline"
+                            className={
+                              product.mintingStatus === "pending"
+                                ? "text-info border-info"
+                                : product.mintingStatus === "submitted"
+                                  ? "text-info border-info"
+                                  : product.mintingStatus === "confirmed"
+                                    ? "text-success border-success bg-transparent"
+                                    : "text-destructive border-destructive"
+                            }
+                          >
+                            {product.mintingStatus === "pending" &&
+                              "⏳ Pendiente"}
+                            {product.mintingStatus === "submitted" &&
+                              "📤 Enviado"}
+                            {product.mintingStatus === "confirmed" &&
+                              "✅ Confirmado"}
+                            {product.mintingStatus === "failed" && "❌ Falló"}
+                          </Badge>
+                        )}
                       </div>
 
                       {/* Custom Fields Display */}
                       {Object.keys(product.customFields).length > 0 && (
-                        <div className="flex flex-wrap justify-start items-center gap-x-8 gap-y-2 mb-4">
-                          {Object.entries(product.customFields).map(
-                            ([key, value]) => (
-                              <div
-                                key={key}
-                                className="text-sm flex items-center gap-2"
-                              >
-                                {(value as any).trait_type === "tags" ? (
-                                  <>
-                                    <span className="text-muted-foreground capitalize">
-                                      {(value as any).trait_type}:
-                                    </span>
-                                    <div className="flex flex-wrap gap-2">
-                                      {(value as any).value
-                                        .split(",")
-                                        .map((v: string) => {
-                                          return (
-                                            <Badge
-                                              key={v}
-                                              variant="outline"
-                                              className="text-xs"
-                                            >
-                                              {v}
-                                            </Badge>
-                                          );
-                                        })}
-                                    </div>
-                                  </>
-                                ) : (
-                                  <>
-                                    <span className="text-muted-foreground capitalize">
-                                      {(value as any).trait_type}:
-                                    </span>
-                                    <span className="ml-1 font-medium">
-                                      {String((value as any).value)}
-                                    </span>
-                                  </>
-                                )}
-                              </div>
-                            ),
+                        <div className="mb-4">
+                          <div className="flex flex-wrap justify-start items-center gap-x-8 gap-y-2 max-h-[3.5rem] overflow-hidden">
+                            {Object.entries(product.customFields)
+                              .slice(0, 4)
+                              .map(([key, value]) => (
+                                <div
+                                  key={key}
+                                  className="text-sm flex items-center gap-2"
+                                >
+                                  {(value as any).trait_type === "tags" ? (
+                                    <>
+                                      <span className="text-muted-foreground capitalize">
+                                        {(value as any).trait_type}:
+                                      </span>
+                                      <div className="flex flex-wrap gap-2">
+                                        {(value as any).value
+                                          .split(",")
+                                          .map((v: string) => {
+                                            return (
+                                              <Badge
+                                                key={v}
+                                                variant="outline"
+                                                className="text-xs"
+                                              >
+                                                {v}
+                                              </Badge>
+                                            );
+                                          })}
+                                      </div>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <span className="text-muted-foreground capitalize">
+                                        {(value as any).trait_type}:
+                                      </span>
+                                      <span className="ml-1 font-medium">
+                                        {String((value as any).value)}
+                                      </span>
+                                    </>
+                                  )}
+                                </div>
+                              ))}
+                          </div>
+                          {Object.keys(product.customFields).length > 4 && (
+                            <button
+                              onClick={() => handlePreviewProduct(product)}
+                              className="font-semibold underline text-xs text-primary hover:text-primary/80 transition-colors mt-1 cursor-pointer"
+                              title="Ver todos los campos del producto"
+                            >
+                              +{Object.keys(product.customFields).length - 4}{" "}
+                              más
+                            </button>
                           )}
+                        </div>
+                      )}
+
+                      {/* NFT Information */}
+                      {product.tokenId && (
+                        <div className="flex flex-wrap items-center gap-4 mb-4 p-3 bg-transparent rounded-lg border border-success opacity-75">
+                          <div className="flex items-center gap-2">
+                            <Badge
+                              variant="outline"
+                              className="bg-transparent text-success border-success"
+                            >
+                              🎨 NFT
+                            </Badge>
+                            <span className="text-sm text-success">
+                              <strong>Token ID:</strong> {product.tokenId}
+                            </span>
+                          </div>
+                          {product.transactionHash && (
+                            <div className="text-xs text-success">
+                              <strong>Tx:</strong>{" "}
+                              {product.transactionHash.slice(0, 10)}...
+                              {product.transactionHash.slice(-8)}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Transaction Status */}
+                      {product.transactionHash && !product.tokenId && (
+                        <div className="flex flex-wrap items-center gap-4 mb-4 p-3 bg-info/10 rounded-lg border border-info/20">
+                          <div className="flex items-center gap-2">
+                            <Badge
+                              variant="outline"
+                              className="text-info border-info"
+                            >
+                              ⏳ Minting
+                            </Badge>
+                            <span className="text-sm text-info">
+                              <strong>Transaction:</strong>{" "}
+                              {product.transactionHash.slice(0, 10)}...
+                              {product.transactionHash.slice(-8)}
+                            </span>
+                          </div>
                         </div>
                       )}
 
