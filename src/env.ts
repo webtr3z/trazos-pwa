@@ -1,0 +1,8 @@
+// Configuración de variables de entorno
+export const env = {
+  NEXT_PUBLIC_LIVE_COIN_WATCH_API_KEY:
+    process.env.NEXT_PUBLIC_LIVE_COIN_WATCH_API_KEY,
+  NEXT_PUBLIC_ADMIN_WALLET_PRIVATE_KEY:
+    process.env.NEXT_PUBLIC_ADMIN_WALLET_PRIVATE_KEY,
+  NEXT_PUBLIC_AUTH_DOMAIN: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+} as const;
