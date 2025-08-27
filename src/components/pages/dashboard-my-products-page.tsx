@@ -21,70 +21,20 @@ import {
   PlusCircle,
   X,
 } from "lucide-react";
-import { DynamicProductForm } from "./dynamic-product-form";
+import { DynamicProductForm, NFTFormData } from "./dynamic-product-form";
 import { ProductPreview } from "./product-preview";
 import { getProduct } from "@/engine/get-product";
 import { nextTokenToMint } from "@/engine/next-token-to-mint";
 import { useProducts } from "@/hooks/use-products";
-
-interface Product {
-  id: string;
-  name: string;
-  description?: string;
-  status: "draft" | "published" | "archived";
-  createdAt: Date;
-  updatedAt: Date;
-  customFields: Record<string, any>;
-}
-
-const mockProducts: Product[] = [
-  {
-    id: "1",
-    name: "Nike Air Max 270",
-    description:
-      "Zapatillas deportivas Nike Air Max 270 con tecnología Air Max",
-    status: "published",
-    createdAt: new Date("2024-01-15"),
-    updatedAt: new Date("2024-01-20"),
-    customFields: {
-      brand: "Nike",
-      size: "42",
-      color: "Black",
-      condition: "New",
-      image: "/images/nike-shoes.png",
-    },
-  },
-  {
-    id: "2",
-    name: "iPhone 15 Pro",
-    description: "Smartphone Apple iPhone 15 Pro con chip A17 Pro",
-    status: "draft",
-    createdAt: new Date("2024-01-18"),
-    updatedAt: new Date("2024-01-18"),
-    customFields: {
-      brand: "Apple",
-      storage: "256GB",
-      color: "Titanium",
-      condition: "Like New",
-      image: "/images/iphone.png",
-    },
-  },
-  {
-    id: "3",
-    name: "MacBook Air M2",
-    description: "Laptop Apple MacBook Air con chip M2 y 16GB de RAM",
-    status: "published",
-    createdAt: new Date("2024-01-10"),
-    updatedAt: new Date("2024-01-15"),
-    customFields: {
-      brand: "Apple",
-      processor: "M2",
-      ram: "16GB",
-      storage: "512GB",
-      image: "/images/macbook.png",
-    },
-  },
-];
+import { Product, ProductNft } from "@/types/product";
+import { mintProduct } from "@/engine/mint-product";
+import { uploadImage } from "@/engine/upload-image";
+import { useAtom } from "jotai";
+import { getWalletAddress } from "@/actions/auth";
+import { sendTransaction } from "thirdweb";
+import { client } from "@/services/thirdweb/client";
+import { useActiveAccount } from "thirdweb/react";
+import { Account } from "thirdweb/wallets";
 
 const getStatusColor = (status: Product["status"]) => {
   switch (status) {
@@ -119,7 +69,9 @@ export default function DashboardMyProductsPage() {
 
   const { products, setProducts } = useProducts();
 
-  const handleProductSubmit = (productData: any) => {
+  const account = useActiveAccount() as Account;
+
+  const handleProductSubmit = async (productData: NFTFormData) => {
     if (editingProduct) {
       // Update existing product
       const updatedProduct: Product = {
@@ -127,7 +79,7 @@ export default function DashboardMyProductsPage() {
         name: productData.name || editingProduct.name,
         description: productData.description || editingProduct.description,
         updatedAt: new Date(),
-        customFields: productData.customFields || editingProduct.customFields,
+        customFields: productData.properties || editingProduct.customFields,
       };
 
       setProducts(
@@ -142,10 +94,37 @@ export default function DashboardMyProductsPage() {
         status: "draft",
         createdAt: new Date(),
         updatedAt: new Date(),
-        customFields: productData.customFields || {},
+        customFields: productData.properties || {},
+        // tokenId: productData.tokenId,
+        // transactionHash: productData.transactionHash,
       };
 
       setProducts([newProduct, ...products]);
+
+      // Upload Image and GET IPFS HASH
+      const imageHash = await uploadImage(productData.image as File);
+      const nftData: ProductNft = {
+        image: imageHash,
+        description: productData.description,
+        name: productData.name,
+        attributes: productData.properties,
+      };
+
+      // * HERE WE NEED TO GET THE WALLET ADDRESS
+      const walletAddress = await getWalletAddress();
+      const preparedTx = await mintProduct(walletAddress as string, nftData);
+
+      const { transactionHash } = await sendTransaction({
+        account: account,
+        transaction: preparedTx,
+      });
+
+      console.log("\n\n============================");
+      console.log("[WALLET]", walletAddress);
+      console.log("[PRODUCT DATA]", productData);
+      console.log("[IMAGE HASH]", imageHash);
+      console.log("[TX HASH]", transactionHash);
+      console.log("============================\n\n");
     }
 
     setShowForm(false);
@@ -261,7 +240,6 @@ export default function DashboardMyProductsPage() {
               onCancel={
                 editingProduct ? handleCancelEdit : () => setShowForm(false)
               }
-              initialData={editingProduct}
             />
           </CardContent>
         </Card>
@@ -375,6 +353,30 @@ export default function DashboardMyProductsPage() {
                                 )}
                               </div>
                             ),
+                          )}
+                        </div>
+                      )}
+
+                      {/* NFT Information */}
+                      {product.tokenId && (
+                        <div className="flex flex-wrap items-center gap-4 mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                          <div className="flex items-center gap-2">
+                            <Badge
+                              variant="outline"
+                              className="bg-blue-100 text-blue-800 border-blue-300"
+                            >
+                              🎨 NFT
+                            </Badge>
+                            <span className="text-sm text-blue-700">
+                              <strong>Token ID:</strong> {product.tokenId}
+                            </span>
+                          </div>
+                          {product.transactionHash && (
+                            <div className="text-xs text-blue-600">
+                              <strong>Tx:</strong>{" "}
+                              {product.transactionHash.slice(0, 10)}...
+                              {product.transactionHash.slice(-8)}
+                            </div>
                           )}
                         </div>
                       )}

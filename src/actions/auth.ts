@@ -17,15 +17,16 @@ export async function login(payload: VerifyLoginPayloadParams) {
     const jwt = await thirdwebAuth.generateJWT({
       payload: verifiedPayload.payload,
     });
+    const expiration = new Date(Date.now() + 24 * 60 * 60 * 1000);
     const c = await cookies();
     // * Set expiration one day duration
-    c.set("jwt", jwt, { expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
-
+    c.set("jwt", jwt, { expires: expiration });
+    c.set("address", verifiedPayload.payload.address, { expires: expiration });
     // * Test expiration one minute duration
     // c.set("jwt", jwt, {
     //   expires: new Date(new Date().getTime() + 1 * 60 * 1000),
     // });
-    console.log("[🔓login] jwt", jwt);
+    console.log("[🔓login] jwt", jwt, verifiedPayload.payload.address);
     // redirect to the dashboard home page
     //return redirect("/dashboard/home");
   }
@@ -49,6 +50,12 @@ export async function isLoggedIn() {
 
   //   return authResult.parsedJWT;
   return true;
+}
+
+export async function getWalletAddress() {
+  const c = await cookies();
+  const address = c.get("address");
+  return address?.value;
 }
 
 export async function logout() {

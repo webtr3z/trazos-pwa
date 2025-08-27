@@ -1,59 +1,44 @@
-# 🚀 RWA Web App - Next.js Web3 Authentication Template
+# 🎨 Bazurto PWA
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.4.6-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Thirdweb](https://img.shields.io/badge/Thirdweb-5.0-purple?style=for-the-badge&logo=ethereum)](https://thirdweb.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 
-A production-ready, enterprise-grade Next.js application template featuring Web3 wallet authentication and a comprehensive UI component system. Built with modern web technologies and best practices for scalable Web3 applications.
-
-## 📋 Table of Contents
-
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Architecture](#-architecture)
-- [Getting Started](#-getting-started)
-- [Project Structure](#-project-structure)
-- [Authentication Flow](#-authentication-flow)
-- [Component System](#-component-system)
-
-- [Development](#-development)
-- [Deployment](#-deployment)
-- [Contributing](#-contributing)
-- [License](#-license)
+A modern, professional Progressive Web Application for digital product management and NFT minting. Built with cutting-edge web technologies and blockchain integration.
 
 ## ✨ Features
 
-### 🔐 **Web3 Authentication**
+### 🎯 **Product Management**
 
-- **Wallet-based authentication** using Thirdweb SDK v5
-- **Middleware protection** for private routes (`/dashboard/**`)
-- **Whitelist system** for authorized wallet addresses
-- **JWT token management** with secure cookie handling
-- **Auto-connect** and session persistence
+- **Dynamic Product Forms** with customizable fields
+- **Real-time Validation** and error handling
+- **File Upload Support** for images and documents
+- **Product Preview** and editing capabilities
+- **Status Management** (Draft, Published, Archived)
+
+### 🚀 **NFT Integration**
+
+- **Product Tokenization** as NFTs on Base Sepolia
+- **IPFS Metadata Storage** for decentralized data
+- **Smart Contract Integration** with Thirdweb SDK
+- **Transaction Tracking** and blockchain verification
+- **Wallet Connection** and authentication
 
 ### 🎨 **Modern UI/UX**
 
-- **Responsive design** with Tailwind CSS
-- **Dark/Light theme** support with system preference detection
-- **Component library** built with Radix UI primitives
+- **Responsive Design** optimized for all devices
+- **Dark/Light Theme** with system preference detection
+- **Component Library** built with Radix UI primitives
+- **Smooth Animations** and micro-interactions
+- **Professional Dashboard** with data visualization
 
-- **Smooth animations** and transitions
+### 🔐 **Authentication & Security**
 
-### 🏗️ **Enterprise Architecture**
-
-- **TypeScript** for type safety and developer experience
-- **App Router** (Next.js 15) for modern routing
-- **Modular component system** with clear separation of concerns
-- **State management** with Jotai atoms
-- **API routes** with proper error handling
-
-### 📱 **Interactive Elements**
-
-
-- **Real-time charts** using Recharts
-- **Responsive navigation** with sidebar and top navbar
-- **Toast notifications** with Sonner
+- **Web3 Wallet Authentication** via Thirdweb
+- **Route Protection** with middleware
+- **JWT Token Management** with secure cookies
+- **Whitelist System** for authorized addresses
 
 ## 🛠️ Tech Stack
 
@@ -66,8 +51,9 @@ A production-ready, enterprise-grade Next.js application template featuring Web3
 ### **Web3 & Blockchain**
 
 - **Thirdweb SDK v5** - Web3 development toolkit
-- **WalletConnect** - Multi-wallet connectivity
-- **Ethereum** - Blockchain integration
+- **Base Sepolia** - Ethereum L2 testnet
+- **IPFS Storage** - Decentralized metadata storage
+- **ERC-721** - NFT standard implementation
 
 ### **Styling & UI**
 
@@ -76,18 +62,19 @@ A production-ready, enterprise-grade Next.js application template featuring Web3
 - **Lucide React** - Beautiful icon library
 - **Framer Motion** - Animation library
 
-### **3D & Graphics**
+### **State Management**
 
-
-- **@types/three** - TypeScript definitions
+- **Jotai** - Atomic state management
+- **React Hooks** - Custom hooks for business logic
+- **Context API** - Theme and authentication context
 
 ### **Development Tools**
 
-- **ESLint** - Code linting
+- **ESLint** - Code linting and quality
 - **Prettier** - Code formatting
 - **Turbopack** - Fast bundler (Next.js 15)
 
-## 🏛️ Architecture
+## 🏗️ Architecture
 
 ### **Project Structure**
 
@@ -95,37 +82,30 @@ A production-ready, enterprise-grade Next.js application template featuring Web3
 src/
 ├── app/                    # Next.js App Router
 │   ├── (public)/          # Public routes
-│   ├── (private)/         # Protected routes
-│   ├── api/               # API endpoints
-│   └── globals.css        # Global styles
+│   ├── (private)/         # Protected dashboard routes
+│   └── api/               # API endpoints
 ├── components/             # Reusable components
 │   ├── ui/                # Base UI components
 │   ├── auth/              # Authentication components
 │   ├── layouts/           # Layout components
-
+│   ├── pages/             # Page-specific components
 │   └── widgets/           # Feature components
-├── contexts/               # React contexts
+├── services/               # Business logic services
+│   ├── thirdweb/          # Blockchain integration
+│   └── coinwatch/         # Crypto data services
 ├── hooks/                  # Custom React hooks
-├── lib/                    # Utility functions
 ├── stores/                 # State management
 ├── types/                  # TypeScript definitions
-└── providers/              # App providers
+└── lib/                    # Utility functions
 ```
 
-### **Authentication Architecture**
+### **Core Components**
 
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Public Route  │───▶│   Middleware    │───▶│  Route Guard    │
-│   (e.g., /)     │    │   (Route Check) │    │ (Auth Check)    │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                                │                       │
-                                ▼                       ▼
-                       ┌─────────────────┐    ┌─────────────────┐
-                       │  Redirect to    │    │  ConnectButton  │
-                       │     /auth       │    │   Overlay       │
-                       └─────────────────┘    └─────────────────┘
-```
+- **DynamicProductForm** - Flexible product creation with custom fields
+- **ProductDashboard** - Management interface for products
+- **NFTMintingService** - Blockchain integration for tokenization
+- **ThemeProvider** - Dark/light mode management
+- **AuthenticationFlow** - Web3 wallet connection and protection
 
 ## 🚀 Getting Started
 
@@ -134,14 +114,15 @@ src/
 - **Node.js** 18.17 or later
 - **npm**, **yarn**, or **pnpm** package manager
 - **Git** for version control
+- **Web3 Wallet** (MetaMask, WalletConnect, etc.)
 
 ### **Installation**
 
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/rwa-web-app.git
-   cd rwa-web-app
+   git clone https://github.com/your-username/bazurto-pwa.git
+   cd bazurto-pwa
    ```
 
 2. **Install dependencies**
@@ -164,146 +145,53 @@ src/
 
    ```env
    # Thirdweb Configuration
-   THIRDWEB_CLIENT_ID=your_client_id_here
-   THIRDWEB_SECRET_KEY=your_secret_key_here
+   NEXT_PUBLIC_THIRDWEB_CLIENT_ID=your_client_id_here
+   NEXT_PUBLIC_THIRDWEB_DEPLOYED_CONTRACT_ADDRESS=your_contract_address
 
-   # App Configuration
-   NEXT_PUBLIC_APP_NAME=RWA Web App
-   NEXT_PUBLIC_APP_URL=http://localhost:3000
+   # Authentication
+   NEXT_PUBLIC_ADMIN_WALLET_PRIVATE_KEY=your_admin_key
+   NEXT_PUBLIC_THIRDWEB_AUTH_DOMAIN=your_domain
    ```
 
 4. **Start development server**
 
    ```bash
    npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
    ```
 
 5. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-## 📁 Project Structure
+## 📱 Usage
 
-### **Core Directories**
+### **Creating Products**
 
-#### **`src/app/` - Next.js App Router**
+1. Navigate to the dashboard
+2. Click "Nuevo Producto" to open the dynamic form
+3. Add custom fields as needed (text, number, image, document, select)
+4. Fill in product information and custom fields
+5. Submit to mint as NFT (currently in simulation mode)
 
-- **`(public)/`** - Public routes accessible to all users
-- **`(private)/`** - Protected routes requiring authentication
-- **`api/`** - Backend API endpoints
-- **`layout.tsx`** - Root layout component
-- **`globals.css`** - Global CSS styles
+### **Managing Products**
 
-#### **`src/components/` - Component Library**
+- **View** all products in the dashboard
+- **Edit** existing products and their custom fields
+- **Change Status** between draft, published, and archived
+- **Preview** products before publishing
+- **Delete** products when no longer needed
 
-- **`ui/`** - Base UI components (Button, Card, Input, etc.)
-- **`auth/`** - Authentication-related components
-- **`layouts/`** - Layout components (Header, Sidebar, etc.)
+### **NFT Features**
 
-- **`widgets/`** - Feature-specific components
-- **`navigation/`** - Navigation components
+- **Metadata Storage** on IPFS for decentralization
+- **Smart Contract Integration** for blockchain verification
+- **Transaction Tracking** with hash verification
+- **Token ID Management** for unique identification
 
-#### **`src/lib/` - Utility Functions**
-
-- **`whitelist.ts`** - Authorized wallet addresses
-- **`utils.ts`** - General utility functions
-- **`crypto-utils.ts`** - Cryptographic utilities
-
-#### **`src/types/` - TypeScript Definitions**
-
-- **`crypto.ts`** - Cryptocurrency-related types
-- **`auth.ts`** - Authentication types
-
-### **Key Files**
-
-#### **`src/middleware.ts`**
-
-```typescript
-export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith("/dashboard")) {
-    // Protect dashboard routes
-    return NextResponse.redirect(new URL("/auth", request.url));
-  }
-  return NextResponse.next();
-}
-```
-
-#### **`src/lib/whitelist.ts`**
-
-```typescript
-export const whitelist = [
-  "0x04c7aa030ed71502c00a7a805ad84209d0ba9256",
-  "0x1234567890123456789012345678901234567890", // Demo wallet
-];
-```
-
-## 🔐 Authentication Flow
-
-### **1. Route Protection**
-
-- **Middleware** intercepts all requests to `/dashboard/**`
-- **Unauthenticated users** are redirected to `/auth`
-- **Authenticated users** proceed to the requested route
-
-### **2. Wallet Connection**
-
-- **ConnectButton** from Thirdweb SDK handles wallet connection
-- **Multiple wallet support** (MetaMask, WalletConnect, etc.)
-- **Auto-connect** for returning users
-
-### **3. Authorization**
-
-- **Whitelist verification** for connected wallets
-- **JWT token generation** upon successful authentication
-- **Session persistence** with secure cookies
-
-### **4. Access Control**
-
-- **RouteGuard component** protects private routes
-- **Real-time wallet status** monitoring
-- **Automatic logout** on wallet disconnection
-
-## 🧩 Component System
-
-### **UI Components (`src/components/ui/`)**
-
-Built with Radix UI primitives for accessibility and customization:
-
-```typescript
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-// Usage example
-<Card>
-  <CardHeader>
-    <CardTitle>Component Title</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <Button variant="default">Click me</Button>
-  </CardContent>
-</Card>
-```
-
-### **Layout Components**
-
-- **`PublicLayout`** - Layout for public pages
-- **`PrivateLayout`** - Layout for authenticated pages
-- **`Sidebar`** - Navigation sidebar component
-- **`TopNavbar`** - Top navigation bar
-
-
-
-
-
-## 🛠️ Development
+## 🔧 Development
 
 ### **Available Scripts**
 
 ```bash
-# Development
 npm run dev          # Start development server with Turbopack
 npm run build        # Build for production
 npm run start        # Start production server
@@ -311,19 +199,20 @@ npm run lint         # Run ESLint
 npm run format       # Format code with Prettier
 ```
 
-### **Code Quality**
+### **Code Quality Standards**
 
-- **ESLint** configuration for code quality
-- **Prettier** for consistent code formatting
 - **TypeScript** strict mode enabled
-- **Component documentation** with JSDoc comments
+- **ESLint** rules must pass
+- **Prettier** formatting required
+- **Component documentation** with JSDoc
+- **Accessibility** best practices
 
 ### **Development Workflow**
 
 1. **Feature development** in feature branches
 2. **Code review** process for all changes
-3. **Automated testing** (to be implemented)
-4. **Continuous integration** (to be implemented)
+3. **Type safety** with TypeScript
+4. **Component testing** and validation
 
 ## 🚀 Deployment
 
@@ -333,19 +222,12 @@ npm run format       # Format code with Prettier
 2. **Configure environment variables**
 3. **Deploy automatically** on push to main branch
 
-### **Other Platforms**
-
-- **Netlify** - Static site hosting
-- **Railway** - Full-stack deployment
-- **Docker** - Containerized deployment
-
-### **Environment Variables**
+### **Environment Variables for Production**
 
 ```env
-# Production
 NEXT_PUBLIC_APP_URL=https://your-domain.com
-THIRDWEB_CLIENT_ID=your_production_client_id
-THIRDWEB_SECRET_KEY=your_production_secret_key
+NEXT_PUBLIC_THIRDWEB_CLIENT_ID=your_production_client_id
+NEXT_PUBLIC_THIRDWEB_DEPLOYED_CONTRACT_ADDRESS=your_production_contract
 ```
 
 ## 🤝 Contributing
@@ -358,9 +240,8 @@ We welcome contributions! Please follow these guidelines:
 2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
 3. **Make your changes** following the coding standards
 4. **Test thoroughly** before submitting
-5. **Commit your changes** (`git commit -m 'Add amazing feature'`)
-6. **Push to the branch** (`git push origin feature/amazing-feature`)
-7. **Open a Pull Request**
+5. **Commit your changes** with conventional commits
+6. **Open a Pull Request**
 
 ### **Coding Standards**
 
@@ -370,37 +251,43 @@ We welcome contributions! Please follow these guidelines:
 - **Component documentation** with JSDoc
 - **Accessibility** best practices
 
-### **Commit Convention**
+## 📚 Documentation
 
-```
-feat: add new feature
-fix: bug fix
-docs: documentation changes
-style: code style changes
-refactor: code refactoring
-test: add tests
-chore: maintenance tasks
-```
+### **Component Documentation**
 
-## 📚 Additional Resources
+- **UI Components** - Base design system components
+- **Business Components** - Product management and NFT features
+- **Layout Components** - Page structure and navigation
+- **Authentication Components** - Web3 wallet integration
 
-### **Documentation**
+### **API Reference**
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Thirdweb Documentation](https://portal.thirdweb.com/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- **Product Endpoints** - CRUD operations for products
+- **NFT Endpoints** - Blockchain integration endpoints
+- **Authentication Endpoints** - Wallet connection and verification
 
+## 🔮 Roadmap
 
-### **Community**
+### **Phase 1: Core Features** ✅
 
-- [Next.js Discord](https://discord.gg/nextjs)
-- [Thirdweb Discord](https://discord.gg/thirdweb)
-- [GitHub Discussions](https://github.com/your-username/rwa-web-app/discussions)
+- [x] Dynamic product forms
+- [x] Product management dashboard
+- [x] Basic NFT minting simulation
+- [x] Web3 wallet authentication
 
-### **Related Projects**
+### **Phase 2: Blockchain Integration** 🚧
 
-- [thirdweb-auth-next](https://github.com/thirdweb-example/thirdweb-auth-next) - Official Thirdweb auth example
-- [shadcn/ui](https://ui.shadcn.com/) - UI component library
+- [ ] Real NFT minting on Base Sepolia
+- [ ] IPFS metadata storage
+- [ ] Smart contract interaction
+- [ ] Transaction verification
+
+### **Phase 3: Advanced Features** 📋
+
+- [ ] Product marketplace
+- [ ] Royalty distribution
+- [ ] Multi-chain support
+- [ ] Advanced analytics
 
 ## 📄 License
 
@@ -412,19 +299,19 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - **Vercel** for Next.js and deployment platform
 - **Radix UI** for accessible component primitives
 - **Tailwind CSS** for the utility-first CSS framework
-
+- **Base Network** for L2 scaling solution
 
 ## 📞 Support
 
 If you need help or have questions:
 
 - **Create an issue** on GitHub
-- **Join our Discord** community
-- **Check the documentation** in the `/docs` folder
-- **Review examples** in the `/examples` folder
+- **Check the documentation** in the codebase
+- **Review examples** in the components
+- **Join our community** discussions
 
 ---
 
-**Made with ❤️ by the RWA Web App team**
+**Built with ❤️ by the Bazurto PWA team**
 
-_Built for the future of Web3 applications_
+_Empowering digital product management with blockchain technology_
