@@ -1,13 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { FileDropZone } from "@/components/ui/file-drop-zone";
+import { Badge } from "@/components/ui/badge";
 import { Plus, X, Loader2, ChevronDown, Check } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -17,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { QrCodeGenerator } from "@/components/widgets/qr-code-generator";
 
 interface CustomField {
   id: string;
@@ -33,6 +35,7 @@ export interface NFTFormData {
   name: string;
   description: string;
   image: File | null;
+  qrCodeSvg: File | null;
   properties: Array<{
     trait_type: string;
     value: string;
@@ -57,6 +60,7 @@ export function DynamicProductForm({
 
   const [customFields, setCustomFields] = useState<CustomField[]>([]);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [qrCodeSvg, setQrCodeSvg] = useState<File | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showAddField, setShowAddField] = useState(false);
@@ -101,6 +105,17 @@ export function DynamicProductForm({
     setSelectedImage(null);
   };
 
+  // Handle QR code generation
+  const handleQrCodeGenerated = useCallback(
+    (svgFile: File) => {
+      setQrCodeSvg(svgFile);
+      if (errors.qrCodeSvg) {
+        setErrors((prev) => ({ ...prev, qrCodeSvg: "" }));
+      }
+    },
+    [errors.qrCodeSvg],
+  );
+
   // Validate form
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -115,6 +130,10 @@ export function DynamicProductForm({
 
     if (!selectedImage) {
       newErrors.image = "La imagen del producto es requerida";
+    }
+
+    if (!qrCodeSvg) {
+      newErrors.qrCodeSvg = "El código QR es requerido";
     }
 
     // Validate custom fields
@@ -169,6 +188,7 @@ export function DynamicProductForm({
         name: formData.name,
         description: formData.description,
         image: selectedImage,
+        qrCodeSvg: qrCodeSvg,
         properties,
       };
 
@@ -179,6 +199,7 @@ export function DynamicProductForm({
       setFormData({ name: "", description: "" });
       setCustomFields([]);
       setSelectedImage(null);
+      setQrCodeSvg(null);
       setErrors({});
 
       toast.success("¡Producto creado exitosamente!");
@@ -226,7 +247,7 @@ export function DynamicProductForm({
                 }
                 placeholder="Describe tu producto..."
                 rows={3}
-                className={`${errors.description ? "border-red-500" : ""} focus:outline-none focus:ring-1 focus:ring-ring focus:ring-offset-1`}
+                className={`bg-transparent ${errors.description ? "border-red-500" : ""} focus:outline-none focus:ring-1 focus:ring-ring focus:ring-offset-1`}
               />
               {errors.description && (
                 <p className="text-sm text-red-500">{errors.description}</p>
@@ -262,6 +283,21 @@ export function DynamicProductForm({
             </div>
           </CardContent>
         </Card>
+
+        {/* QR Code Configuration */}
+
+        <div className="flex items-center gap-4">
+          <div className="flex-1">
+            <QrCodeGenerator
+              productId={formData.name || "temp-id"}
+              productName={formData.name || "Producto"}
+              onQrCodeGenerated={handleQrCodeGenerated}
+            />
+          </div>
+        </div>
+        {errors.qrCodeSvg && (
+          <p className="text-sm text-red-500">{errors.qrCodeSvg}</p>
+        )}
 
         {/* Custom Fields */}
         <Card>
