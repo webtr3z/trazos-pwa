@@ -4,21 +4,21 @@ export function AppFeatures() {
   return (
     <div className="grid gap-4 lg:grid-cols-3 justify-center">
       <ArticleCard
+        title="🚀 Formularios Dinámicos NFT"
+        href="#"
+        description="Crea productos únicos con campos personalizables (texto, número, selección) y conviértelos en NFTs en la blockchain de Base Sepolia."
+      />
+
+      <ArticleCard
         title="🔐 Autenticación Web3 Segura"
         href="#"
-        description="Sistema de autenticación basado en wallet con whitelist y validación en tiempo real para máxima seguridad."
+        description="Sistema de autenticación basado en wallet con Thirdweb, whitelist y validación en tiempo real para máxima seguridad blockchain."
       />
 
       <ArticleCard
-        title="🎨 Experiencia Visual Inmersiva"
+        title="📱 Generación de Códigos QR"
         href="#"
-        description="Interfaces modernas y elegantes que se adaptan a cada página para una experiencia visual inmersiva."
-      />
-
-      <ArticleCard
-        title="⚡ Dashboard Dinámico"
-        href="#"
-        description="Panel de control en tiempo real con datos de mercado crypto, gráficos interactivos y gestión de sesión avanzada."
+        description="Sistema inteligente para generar códigos QR únicos que conectan productos físicos con sus páginas digitales (PDP) en la blockchain."
       />
     </div>
   );
