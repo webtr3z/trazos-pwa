@@ -17,9 +17,9 @@ export function TopNavbar() {
             <Image
               src="/images/logo.png"
               alt="Logo"
-              width={40}
-              height={40}
-              className="h-10 w-auto"
+              width={164}
+              height={80}
+              className=""
             />
           </div>
           <div className="flex items-center space-x-3">
