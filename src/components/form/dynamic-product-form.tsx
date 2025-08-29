@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-"use client";
 
 import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";

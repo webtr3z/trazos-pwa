@@ -10,7 +10,7 @@ export function TopNavbar() {
   const router = useRouter();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
+    <nav className="bg-background/80 backdrop-blur-sm border-b border-border">
       <div className="w-full mx-auto px-4 py-2">
         <div className="flex items-center justify-between h-14">
           <div className="flex items-center space-x-4">

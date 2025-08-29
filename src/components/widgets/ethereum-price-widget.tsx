@@ -62,9 +62,8 @@ export function EthereumPriceWidget() {
   );
 
   return (
-    <Badge
-      variant={isPositive ? "outline-success" : "outline-destructive"}
-      className={`flex flex-col items-end justify-center gap-1 ${isPositive ? "text-success" : "text-destructive"}`}
+    <div
+      className={`flex flex-col items-end justify-center gap-0 ${isPositive ? "text-success" : "text-destructive"}`}
     >
       <div className="flex items-center gap-1 justify-end">
         {changeIcon}
@@ -77,6 +76,6 @@ export function EthereumPriceWidget() {
         <span className="font-mono text-xs">ETH</span>
         <span className="font-semibold">${priceData.price.toFixed(2)}</span>
       </div>
-    </Badge>
+    </div>
   );
 }

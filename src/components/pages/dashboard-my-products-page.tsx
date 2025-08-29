@@ -23,11 +23,12 @@ import {
   Loader2,
   RefreshCw,
 } from "lucide-react";
-import { DynamicProductForm, NFTFormData } from "./dynamic-product-form";
+import { DynamicProductForm, NFTFormData } from "../form/dynamic-product-form";
 import { ProductPreview } from "./product-preview";
 import { getProduct } from "@/engine/get-product";
 import { nextTokenToMint } from "@/engine/next-token-to-mint";
 import { useProducts } from "@/hooks/use-products";
+import { useProductsOfOwner } from "@/hooks/use-products-of-owner";
 import { Product, ProductNft } from "@/types/product";
 import { mintProduct } from "@/engine/mint-product";
 import { uploadImage } from "@/engine/upload-image";
@@ -70,10 +71,13 @@ export default function DashboardMyProductsPage() {
   );
   const [mintingLoading, setMintingLoading] = useState(false);
 
-  const { products, setProducts, refreshProducts, productsLoading } =
-    useProducts();
+  // const { products, setProducts, refreshProducts, productsLoading } =
+  //   useProducts();
 
   const account = useActiveAccount() as Account;
+
+  const { products, setProducts, refreshProducts, productsLoading } =
+    useProductsOfOwner(account?.address || null);
 
   const startTransactionPolling = async (
     productId: string,
