@@ -57,10 +57,10 @@ export function PrivateLayout({ children }: PrivateLayoutProps) {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2 px-4 py-3">
                 <Image
-                  src="/images/logo.png"
+                  src="/images/trazos.svg"
                   alt="Logo"
-                  width={164}
-                  height={80}
+                  width={40}
+                  height={40}
                   className=""
                 />
               </div>

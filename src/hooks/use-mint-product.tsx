@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { NFTFormData } from "@/components/pages/dynamic-product-form";
+import { NFTFormData } from "@/components/form/dynamic-product-form";
 import { mintProduct } from "@/engine/mint-product";
 import { ProductNft } from "@/types/product";
 
@@ -19,7 +19,10 @@ export interface UseMintProductReturn {
  */
 export const useMintProduct = (): UseMintProductReturn => {
   const [isMinting, setIsMinting] = useState(false);
-  const [mintResult, setMintResult] = useState<{ success: boolean; error?: string } | null>(null);
+  const [mintResult, setMintResult] = useState<{
+    success: boolean;
+    error?: string;
+  } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleMintProduct = useCallback(
