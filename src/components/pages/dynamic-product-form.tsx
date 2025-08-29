@@ -285,19 +285,33 @@ export function DynamicProductForm({
         </Card>
 
         {/* QR Code Configuration */}
-
-        <div className="flex items-center gap-4">
-          <div className="flex-1">
-            <QrCodeGenerator
-              productId={formData.name || "temp-id"}
-              productName={formData.name || "Producto"}
-              onQrCodeGenerated={handleQrCodeGenerated}
-            />
-          </div>
-        </div>
-        {errors.qrCodeSvg && (
-          <p className="text-sm text-red-500">{errors.qrCodeSvg}</p>
-        )}
+        <Card>
+          <CardHeader>
+            <CardTitle>Configuración de Código QR</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              🎯 Genera automáticamente un código QR único para tu producto
+            </p>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center gap-4">
+              <div className="flex-1">
+                <QrCodeGenerator
+                  productId={formData.name || "temp-id"}
+                  productName={formData.name || "Producto"}
+                  onQrCodeGenerated={handleQrCodeGenerated}
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="text-xs">
+                  Auto-generado
+                </Badge>
+              </div>
+            </div>
+            {errors.qrCodeSvg && (
+              <p className="text-sm text-red-500">{errors.qrCodeSvg}</p>
+            )}
+          </CardContent>
+        </Card>
 
         {/* Custom Fields */}
         <Card>

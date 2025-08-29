@@ -1,8 +1,10 @@
 // Layouts
-export { PageHeader } from "./layouts/page-header";
 export { PublicLayout } from "./layouts/public-layout";
 export { PrivateLayout } from "./layouts/private-layout";
 export { ComponentSection } from "./layouts/component-section";
+
+// Sections
+export * from "./sections";
 
 // Pages
 export { default as HomePage } from "./pages/home-page";

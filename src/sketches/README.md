@@ -2,14 +2,13 @@
 
 This directory contains the Three.js implementation for creating an immersive 3D background scene on the landing page.
 
-## 📁 File Structure
+## 📁 Files
 
 ```
 src/sketches/
 ├── background-scene.ts      # Main Three.js scene class
 ├── background-canvas.tsx    # React component wrapper
-├── index.ts                 # Exports
-└── README.md               # This documentation
+└── index.ts                 # Export file
 ```
 
 ## 🚀 Features
@@ -17,25 +16,20 @@ src/sketches/
 ### **BackgroundScene Class**
 
 - **3D Model Loading**: Loads GLB models with GLTFLoader
-- **Outdoor Lighting**: Realistic environmental lighting setup
-- **Camera Animation**: Subtle camera movement for dynamism
+- **Advanced Lighting**: Multi-directional lighting with rainbow accent lights
+- **Animation Support**: Full support for model animations and morphing
 - **Model Rotation**: Gentle rotation of the 3D model
-- **Responsive Design**: Adapts to different screen sizes
-- **Performance Optimized**: Efficient rendering with proper cleanup
-
-### **Lighting Setup**
-
-- **Ambient Light**: Overall scene illumination
-- **Directional Light**: Main sunlight simulation
-- **Fill Light**: Soft fill from opposite direction
-- **Rim Light**: Backlight for depth and separation
-- **Hemisphere Light**: Sky/ground color influence
+- **Camera Movement**: Subtle camera animation for dynamic viewing
+- **Shadow Mapping**: High-quality shadows for depth and realism
+- **Material Enhancement**: Optimized materials for rainbow effects
+- **Dynamic Dark Background**: Animated shader-based background that refreshes
+- **Floating Elements**: Subtle geometric shapes with smooth animations
 
 ### **BackgroundCanvas Component**
 
-- **React Integration**: Seamless integration with React
+- **React Integration**: Seamless integration with React components
+- **Responsive Design**: Adapts to container size changes
 - **Loading State**: Visual feedback during 3D scene initialization
-- **Responsive**: Automatically adjusts to container size
 - **Performance**: Optimized rendering with proper cleanup
 
 ## 🎯 Usage
@@ -47,61 +41,85 @@ import { BackgroundCanvas } from "@/sketches";
 
 export default function HomePage() {
   return (
-    <div className="relative">
+    <div className="min-h-screen relative">
       {/* 3D Background Scene */}
       <BackgroundCanvas />
-
+      
       {/* Your content */}
-      <div className="relative z-10">{/* Page content goes here */}</div>
+      <div className="relative z-10">
+        {/* Page content */}
+      </div>
     </div>
   );
 }
 ```
 
-### **Customization**
+## 🔧 Customization
 
 The `BackgroundScene` class can be extended or modified to:
 
-- Change lighting parameters
-- Adjust camera movement
-- Modify model positioning
+- Change lighting configurations
+- Modify camera behavior
 - Add additional 3D elements
 - Customize background colors
+- Adjust animation speeds
+- Enhance material properties
+- Modify shader effects
+- Add more floating elements
 
-## 🔧 Technical Details
+## 🎨 Current 3D Model
 
-### **Dependencies**
+### **Rainbow Morph Animation Model**
+
+The current implementation features a **rainbow morphing animation model** (`rainbow_morph_animation.glb`) that showcases:
+
+- **Dynamic Morphing**: Smooth shape-shifting animations
+- **Rainbow Effects**: Colorful transformations and effects
+- **Interactive Lighting**: Rainbow accent lights that complement the model
+- **Smooth Animations**: Optimized animation playback with looping
+- **Enhanced Materials**: Metallic and reflective properties for better visual appeal
+
+## 🌑 Dynamic Dark Background
+
+### **Shader-Based Animation**
+
+The background uses a custom shader material that creates:
+
+- **Animated Dark Theme**: Continuously refreshing dark background
+- **Subtle Color Variations**: Dynamic red, green, and blue variations
+- **Noise Animation**: Smooth noise patterns that move over time
+- **Gradient Effects**: Smooth transitions between dark shades
+- **Real-time Updates**: Background refreshes every frame
+
+### **Floating Elements**
+
+Subtle geometric shapes that add visual interest:
+
+- **Sphere**: Smooth spherical geometry
+- **Cube**: Angular box geometry
+- **Torus**: Ring-shaped geometry
+- **Octahedron**: Diamond-like geometry
+
+Each element features:
+- **Floating Motion**: Smooth up/down and side-to-side movement
+- **Rotation**: Continuous rotation on multiple axes
+- **Transparency**: Subtle opacity for depth
+- **Random Positioning**: Distributed throughout the scene
+
+## 🛠️ Dependencies
 
 - **Three.js**: Core 3D graphics library
-- **GLTFLoader**: For loading GLB/GLTF models
+- **GLTFLoader**: For loading GLB/GLTF 3D models
 - **TypeScript**: Type-safe implementation
-
-### **Performance Features**
-
-- **Shadow Mapping**: High-quality shadows with PCF filtering
-- **Tone Mapping**: ACES Filmic for realistic color reproduction
-- **Antialiasing**: Smooth edges and reduced jagged lines
-- **Responsive Rendering**: Adapts to device pixel ratio
-
-### **Memory Management**
-
-- **Proper Cleanup**: Disposes of WebGL contexts
-- **Event Listener Cleanup**: Prevents memory leaks
-- **Resource Management**: Efficient texture and material handling
 
 ## 📱 3D Model Requirements
 
 ### **Supported Formats**
 
-- **GLB**: Binary GLTF (recommended)
+- **GLB**: Binary GLTF format (recommended)
 - **GLTF**: JSON-based 3D format
-
-### **Model Guidelines**
-
-- **Polygon Count**: Keep under 50k polygons for web performance
-- **Texture Size**: Use power-of-2 dimensions (512x512, 1024x1024, etc.)
-- **Material Types**: PBR materials work best with the lighting setup
-- **Animations**: Supported if present in the model
+- **Animations**: Full support for skeletal and morphing animations
+- **Materials**: PBR materials with normal maps and textures
 
 ### **File Placement**
 
@@ -109,82 +127,104 @@ Place your 3D models in the `public/3d/` directory:
 
 ```
 public/3d/
-├── market_stock.glb        # Main market model
-└── other_models.glb        # Additional models
+├── rainbow_morph_animation.glb    # Main rainbow morphing model
+└── other_models.glb               # Additional models
 ```
 
-## 🎨 Customization Examples
+## 🎨 Customization Options
 
-### **Change Background Colors**
+### **Modify Background Shader**
 
 ```typescript
-private createGradientTexture(): THREE.Texture {
-  // Customize these colors
-  gradient.addColorStop(0, '#your-sky-color');
-  gradient.addColorStop(1, '#your-ground-color');
-}
+// In background-scene.ts - initDynamicBackground()
+this.backgroundMaterial = new THREE.ShaderMaterial({
+  uniforms: {
+    time: { value: 0.0 },
+    resolution: { value: new THREE.Vector2(200, 200) }
+  },
+  fragmentShader: `
+    uniform float time;
+    varying vec2 vUv;
+    
+    void main() {
+      vec2 uv = vUv;
+      
+      // Customize these values for different effects
+      float red = 0.05 + sin(time * 0.2) * 0.01;
+      float green = 0.03 + sin(time * 0.15) * 0.008;
+      float blue = 0.08 + sin(time * 0.25) * 0.012;
+      
+      vec3 darkColor = vec3(red, green, blue);
+      gl_FragColor = vec4(darkColor, 1.0);
+    }
+  `
+});
 ```
 
-### **Adjust Camera Movement**
+### **Adjust Floating Elements**
 
 ```typescript
-private animate(): void {
-  // Customize camera animation
-  this.camera.position.x = Math.sin(time * 0.05) * 1; // Slower, smaller movement
-  this.camera.position.y = 5 + Math.sin(time * 0.02) * 0.2; // Gentler vertical movement
-}
+// In addAnimatedBackgroundElements()
+const shapes = [
+  { geometry: new THREE.SphereGeometry(2, 8, 6), color: 0x1a1a1a },
+  { geometry: new THREE.BoxGeometry(3, 3, 3), color: 0x0f0f0f },
+  // Add more shapes or modify existing ones
+];
+
+// Customize animation speeds
+shapes.forEach((shape, index) => {
+  // ... existing code ...
+  (mesh as any).animationSpeed = 0.5 + Math.random() * 0.5;  // Adjust range
+  (mesh as any).rotationSpeed = 0.001 + Math.random() * 0.002;  // Adjust rotation
+});
 ```
 
-### **Modify Lighting**
+### **Modify Camera Movement**
 
 ```typescript
-private initLighting(): void {
-  // Adjust light intensities
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); // Brighter ambient
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5); // Stronger sun
-}
+// Adjust camera animation speed and range
+const time = this.clock.getElapsedTime();
+this.camera.position.x = Math.sin(time * 0.08) * 3;  // Speed: 0.08, Range: 3
+this.camera.position.y = 8 + Math.sin(time * 0.04) * 0.8;  // Speed: 0.04, Range: 0.8
 ```
 
-## 🚨 Troubleshooting
+## 🚀 Performance Optimization
 
-### **Common Issues**
+### **Rendering Settings**
 
-1. **Model Not Loading**
-   - Check file path in `loadModel()` method
-   - Verify GLB file is valid
-   - Check browser console for errors
+- **Pixel Ratio**: Limited to 2x for performance
+- **Shadow Maps**: 2048x2048 resolution for quality
+- **Tone Mapping**: ACES Filmic for realistic lighting
+- **Antialiasing**: Enabled for smooth edges
 
-2. **Performance Issues**
-   - Reduce model polygon count
-   - Optimize textures
-   - Check device capabilities
+### **Animation Optimization**
 
-3. **Lighting Too Bright/Dark**
-   - Adjust light intensities in `initLighting()`
-   - Modify tone mapping exposure
-   - Check background gradient colors
+- **Request Animation Frame**: Efficient rendering loop
+- **Delta Time**: Smooth animation regardless of frame rate
+- **Material Updates**: Only when necessary
+- **Shader Uniforms**: Efficient time-based updates
 
-### **Debug Mode**
+### **Background Performance**
 
-Add console logs to track scene initialization:
-
-```typescript
-console.log("Scene initialized:", this.scene);
-console.log("Camera position:", this.camera.position);
-console.log("Model loaded:", this.model);
-```
+- **Shader Material**: GPU-accelerated background rendering
+- **Efficient Geometry**: Simple plane geometry for background
+- **Optimized Animations**: Smooth floating element movement
+- **Memory Management**: Proper cleanup of resources
 
 ## 🔮 Future Enhancements
 
-- **Post-processing Effects**: Bloom, depth of field, motion blur
 - **Interactive Elements**: Clickable 3D objects
-- **Animation Controls**: Play/pause model animations
 - **Multiple Models**: Support for multiple 3D assets
-- **LOD System**: Level of detail for performance optimization
+- **Particle Systems**: Dynamic particle effects
+- **Post-processing**: Advanced visual effects
+- **VR Support**: Virtual reality compatibility
+- **Custom Shaders**: User-defined background effects
+- **Audio Reactivity**: Background that responds to audio
 
 ## 📚 Resources
 
 - [Three.js Documentation](https://threejs.org/docs/)
-- [GLTF Format Specification](https://github.com/KhronosGroup/glTF)
-- [WebGL Best Practices](https://webglfundamentals.org/)
-- [Performance Optimization Guide](https://threejs.org/docs/#manual/en/introduction/How-to-dispose-of-objects)
+- [GLTF Specification](https://github.com/KhronosGroup/glTF)
+- [Three.js Examples](https://threejs.org/examples/)
+- [GLTF Viewer](https://gltf-viewer.donmccurdy.com/)
+- [WebGL Shaders](https://webglfundamentals.org/webgl/lessons/webgl-shaders-and-glsl.html)
