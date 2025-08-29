@@ -73,7 +73,7 @@ export function CTASection() {
 
           <h2 className="text-7xl max-w-[85%] mx-auto font-bold text-foreground mb-8 leading-tight">
             ¿Listo para{" "}
-            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
+            <span className="text-gradient drop-shadow-lg">
               revolucionar tu negocio?
             </span>
           </h2>
@@ -89,7 +89,7 @@ export function CTASection() {
               <Button
                 size="lg"
                 onClick={handleGetStarted}
-                className="group bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-primary-foreground px-12 py-6 text-xl font-bold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:scale-105"
+                className="group bg-gradient-primary hover:bg-gradient-primary-hover text-primary-foreground px-12 py-6 text-xl font-bold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:scale-105"
               >
                 Comenzar Ahora
                 <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" />

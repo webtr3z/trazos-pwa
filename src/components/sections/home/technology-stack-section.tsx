@@ -85,9 +85,7 @@ export function TechnologyStackSection() {
         </Badge>
         <h2 className="text-7xl max-w-[85%] mx-auto font-bold text-foreground leading-tight">
           Construido con las mejores{" "}
-          <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
-            tecnologías Web3
-          </span>
+          <span className="text-gradient drop-shadow-lg">tecnologías Web3</span>
         </h2>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
           Nuestra plataforma utiliza las herramientas más avanzadas y confiables

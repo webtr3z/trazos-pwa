@@ -55,7 +55,7 @@ export function BenefitsSection() {
         </Badge>
         <h2 className="text-7xl max-w-[70%] mx-auto font-bold text-foreground leading-tight">
           Conecta productos físicos con{" "}
-          <span className="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
+          <span className="text-gradient">
             experiencias digitales
           </span>
         </h2>

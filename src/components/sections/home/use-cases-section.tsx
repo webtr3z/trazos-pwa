@@ -79,7 +79,7 @@ export function UseCasesSection() {
         </Badge>
         <h2 className="text-7xl max-w-[85%] mx-auto font-bold text-foreground leading-tight">
           Descubre cómo diferentes industrias{" "}
-          <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
+          <span className="text-gradient drop-shadow-lg">
             se benefician de Trazos
           </span>
         </h2>

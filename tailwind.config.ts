@@ -61,6 +61,11 @@ const config: Config = {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
+        gradient: {
+          primary: "var(--gradient-primary)",
+          "primary-hover": "var(--gradient-primary-hover)",
+          text: "var(--gradient-text)",
+        },
         chart: {
           1: "var(--chart-1)",
           2: "var(--chart-2)",

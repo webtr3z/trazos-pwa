@@ -296,7 +296,7 @@ export default function ProductPage() {
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
               <Button
                 size="lg"
-                className="flex-1 bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-primary-foreground font-semibold"
+                className="flex-1 bg-gradient-primary hover:bg-gradient-primary-hover text-primary-foreground font-semibold"
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Ver en Blockchain
