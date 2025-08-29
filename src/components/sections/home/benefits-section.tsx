@@ -1,9 +1,9 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Star, Zap, Shield, Globe, Smartphone } from "lucide-react";
 import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Globe, Shield, Zap } from "lucide-react";
 
 export function BenefitsSection() {
   const fadeInUp = {
@@ -42,44 +42,23 @@ export function BenefitsSection() {
 
   return (
     <div className="w-full px-4 py-32 bg-gradient-to-b from-background to-gray-950 relative overflow-hidden">
-      {/* QR Code Inspired Squares */}
-      <div className="absolute top-20 left-20 w-3 h-3 bg-white/20 animate-bounce"></div>
-      <div className="absolute top-32 left-32 w-2 h-2 bg-white/15 animate-bounce delay-300"></div>
-      <div className="absolute top-40 left-16 w-4 h-4 bg-white/10 animate-bounce delay-600"></div>
-      <div className="absolute top-16 left-40 w-2 h-2 bg-white/20 animate-bounce delay-900"></div>
-
-      <div className="absolute bottom-20 right-20 w-3 h-3 bg-white/20 animate-bounce delay-200"></div>
-      <div className="absolute bottom-32 right-32 w-2 h-2 bg-white/15 animate-bounce delay-500"></div>
-      <div className="absolute bottom-40 right-16 w-4 h-4 bg-white/10 animate-bounce delay-800"></div>
-      <div className="absolute bottom-16 right-40 w-2 h-2 bg-white/20 animate-bounce delay-1100"></div>
-
-      <div className="absolute top-1/3 right-1/4 w-2 h-2 bg-white/15 animate-bounce delay-400"></div>
-      <div className="absolute top-2/3 left-1/3 w-3 h-3 bg-white/20 animate-bounce delay-700"></div>
-      <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-white/10 animate-bounce delay-1000"></div>
-
-      <motion.div
+      {/* Clean background - no floating elements */}
+      
+      <motion.div 
         className="text-center mb-20 w-full space-y-4"
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        animate="visible"
         variants={fadeInUp}
       >
-        <Badge className="mb-6 px-4 py-2 bg-transparent text-base text-foreground border-white/50">
-          <Star className="w-4 h-4 mr-2" />
-          ¿Por qué elegir Bazurto?
+        <Badge className="bg-transparent text-base text-foreground border-white/50">
+          Beneficios
         </Badge>
-
-        <h2 className="text-7xl font-bold text-foreground leading-tight max-w-[70%] mx-auto">
-          La plataforma que revoluciona la{" "}
-          <span className="bg-gradient-to-r from-primary  to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
-            conexión digital
+        <h2 className="text-7xl max-w-[70%] mx-auto font-bold text-foreground leading-tight">
+          Conecta productos físicos con{" "}
+          <span className="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
+            experiencias digitales
           </span>
         </h2>
-
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          Conecta productos físicos con el mundo digital de manera segura,
-          verificable y escalable usando la tecnología blockchain más avanzada.
-        </p>
       </motion.div>
 
       <motion.div

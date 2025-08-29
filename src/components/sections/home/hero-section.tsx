@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { InteractiveLinesBackgroundComponent } from "@/components/backgrounds/interactive-lines-background";
 
 export function HeroSection() {
   const router = useRouter();
@@ -30,17 +31,6 @@ export function HeroSection() {
       transition: {
         staggerChildren: 0.2,
         delayChildren: 0.1,
-      },
-    },
-  };
-
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
       },
     },
   };
@@ -104,34 +94,7 @@ export function HeroSection() {
   };
 
   return (
-    <div className="relative">
-      {/* Enhanced Background Elements */}
-      <motion.div
-        className="absolute inset-0 -z-10"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-      >
-        <div className="absolute top-0 left-1/4 w-72 h-72 bg-gradient-to-br from-primary/20 via-blue-500/15 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-blue-500/15 via-purple-500/10 to-primary/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-full blur-2xl animate-pulse delay-500"></div>
-
-        {/* QR Code Inspired Squares */}
-        <div className="absolute top-20 right-20 w-3 h-3 bg-white/20 animate-bounce"></div>
-        <div className="absolute top-32 right-32 w-2 h-2 bg-white/15 animate-bounce delay-300"></div>
-        <div className="absolute top-40 right-16 w-4 h-4 bg-white/10 animate-bounce delay-600"></div>
-        <div className="absolute top-16 right-40 w-2 h-2 bg-white/20 animate-bounce delay-900"></div>
-
-        <div className="absolute bottom-20 left-20 w-3 h-3 bg-white/20 animate-bounce delay-200"></div>
-        <div className="absolute bottom-32 left-32 w-2 h-2 bg-white/15 animate-bounce delay-500"></div>
-        <div className="absolute bottom-40 left-16 w-4 h-4 bg-white/10 animate-bounce delay-800"></div>
-        <div className="absolute bottom-16 left-40 w-2 h-2 bg-white/20 animate-bounce delay-1100"></div>
-
-        <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-white/15 animate-bounce delay-400"></div>
-        <div className="absolute top-2/3 right-1/3 w-3 h-3 bg-white/20 animate-bounce delay-700"></div>
-        <div className="absolute top-1/2 left-1/3 w-2 h-2 bg-white/10 animate-bounce delay-1000"></div>
-      </motion.div>
-
+    <div className="relative w-full pointer-events-auto">
       <Card className="relative z-10 border-0 shadow-none bg-transparent">
         <CardContent className="p-8 lg:p-16">
           <motion.div
@@ -153,12 +116,12 @@ export function HeroSection() {
 
             {/* Enhanced Main Headline */}
             <motion.div className="space-y-8" variants={headlineVariants}>
-              <h1 className="text-[164px] font-black text-foreground leading-[0.9] tracking-tight">
+              <h1 className="text-[200px] font-black text-foreground leading-[0.9] tracking-tight">
                 <span className="bg-gradient-to-r from-primary  to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
-                  Trazos
+                  # trazos
                 </span>
-                <br />
-                <span className="text-surface drop-shadow-lg">Dapp</span>
+                {/* <br />
+                <span className="text-surface drop-shadow-lg">Dapp</span> */}
               </h1>
 
               {/* Subtitle with enhanced styling */}
