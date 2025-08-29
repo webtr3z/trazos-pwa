@@ -65,7 +65,7 @@ export function UseCasesSection() {
   return (
     <div className="w-full px-4 py-32 bg-gradient-to-b from-background to-gray-900 relative overflow-hidden">
       {/* Clean background - no floating elements */}
-      
+
       <motion.div
         className="text-center mb-20 w-full space-y-4"
         initial="hidden"
@@ -80,11 +80,11 @@ export function UseCasesSection() {
         <h2 className="text-7xl max-w-[85%] mx-auto font-bold text-foreground leading-tight">
           Descubre cómo diferentes industrias{" "}
           <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
-            se benefician de Bazurto
+            se benefician de Trazos
           </span>
         </h2>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          Desde comercio minorista hasta productos de lujo, Bazurto ofrece
+          Desde comercio minorista hasta productos de lujo, Trazos ofrece
           soluciones adaptadas a cada sector y necesidad específica.
         </p>
       </motion.div>

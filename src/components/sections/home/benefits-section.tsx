@@ -43,8 +43,8 @@ export function BenefitsSection() {
   return (
     <div className="w-full px-4 py-32 bg-gradient-to-b from-background to-gray-950 relative overflow-hidden">
       {/* Clean background - no floating elements */}
-      
-      <motion.div 
+
+      <motion.div
         className="text-center mb-20 w-full space-y-4"
         initial="hidden"
         animate="visible"
@@ -72,7 +72,7 @@ export function BenefitsSection() {
           <Card className="group relative overflow-hidden border-0 shadow-xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 h-full min-h-[400px] flex flex-col">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <CardContent className="relative p-8 text-center flex-1 flex flex-col justify-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-200/20 to-blue-100/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-500/20 to-blue-100/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Globe className="w-10 h-10 text-purple-500" />
               </div>
               <h3 className="text-2xl font-bold mb-4 text-foreground">

@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/shadcn-io/marquee";
 
 const marqueePhrase = [
-  "Bazurto",
+  "Trazos",
   "lleva",
   "los",
   "productos",
