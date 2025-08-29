@@ -115,6 +115,21 @@ export function HeroSection() {
         <div className="absolute top-0 left-1/4 w-72 h-72 bg-gradient-to-br from-primary/20 via-blue-500/15 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-blue-500/15 via-purple-500/10 to-primary/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-full blur-2xl animate-pulse delay-500"></div>
+
+        {/* QR Code Inspired Squares */}
+        <div className="absolute top-20 right-20 w-3 h-3 bg-white/20 animate-bounce"></div>
+        <div className="absolute top-32 right-32 w-2 h-2 bg-white/15 animate-bounce delay-300"></div>
+        <div className="absolute top-40 right-16 w-4 h-4 bg-white/10 animate-bounce delay-600"></div>
+        <div className="absolute top-16 right-40 w-2 h-2 bg-white/20 animate-bounce delay-900"></div>
+
+        <div className="absolute bottom-20 left-20 w-3 h-3 bg-white/20 animate-bounce delay-200"></div>
+        <div className="absolute bottom-32 left-32 w-2 h-2 bg-white/15 animate-bounce delay-500"></div>
+        <div className="absolute bottom-40 left-16 w-4 h-4 bg-white/10 animate-bounce delay-800"></div>
+        <div className="absolute bottom-16 left-40 w-2 h-2 bg-white/20 animate-bounce delay-1100"></div>
+
+        <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-white/15 animate-bounce delay-400"></div>
+        <div className="absolute top-2/3 right-1/3 w-3 h-3 bg-white/20 animate-bounce delay-700"></div>
+        <div className="absolute top-1/2 left-1/3 w-2 h-2 bg-white/10 animate-bounce delay-1000"></div>
       </motion.div>
 
       <Card className="relative z-10 border-0 shadow-none bg-transparent">
@@ -132,7 +147,7 @@ export function HeroSection() {
             >
               <QrCode className="w-5 h-5 animate-pulse" />
               <span className="font-semibold tracking-wide">
-                El futuro del mercado
+                El futuro de tus productos{" "}
               </span>
             </motion.div>
 
@@ -148,9 +163,8 @@ export function HeroSection() {
 
               {/* Subtitle with enhanced styling */}
               <p className="text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-medium">
-                Convierte lo más sabroso y auténtico del Caribe en activos
-                digitales verificables con blockchain y códigos QR únicos por
-                producto.
+                Tokeniza y autentica tus productos y conviértelos en activos
+                digitales verificables con blockchain y códigos QR únicos.
               </p>
             </motion.div>
 
@@ -163,7 +177,6 @@ export function HeroSection() {
                 className="flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20"
                 variants={benefitVariants}
               >
-                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                 <Zap className="w-4 h-4 text-primary" />
                 <span className="text-sm font-medium text-foreground">
                   Implementación en minutos
@@ -173,7 +186,6 @@ export function HeroSection() {
                 className="flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20"
                 variants={benefitVariants}
               >
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse delay-300"></div>
                 <Shield className="w-4 h-4 text-blue-500" />
                 <span className="text-sm font-medium text-foreground">
                   Seguridad blockchain
@@ -183,7 +195,6 @@ export function HeroSection() {
                 className="flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20"
                 variants={benefitVariants}
               >
-                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse delay-700"></div>
                 <Sparkles className="w-4 h-4 text-purple-500" />
                 <span className="text-sm font-medium text-foreground">
                   QR inteligentes

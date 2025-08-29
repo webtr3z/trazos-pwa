@@ -15,10 +15,10 @@ export function TopNavbar() {
         <div className="flex items-center justify-between h-14">
           <div className="flex items-center space-x-4">
             <Image
-              src="/images/bazurto-icon-thin.svg"
+              src="/images/trazos.svg"
               alt="Logo"
-              width={32}
-              height={32}
+              width={40}
+              height={40}
               className=""
             />
           </div>

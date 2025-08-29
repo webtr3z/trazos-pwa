@@ -9,21 +9,24 @@ export function UseCasesSection() {
     {
       icon: TrendingUp,
       title: "Comercio Minorista",
-      description: "Conecta productos en tiendas físicas con contenido digital, ofertas especiales y verificación de autenticidad en tiempo real.",
-      color: "blue"
+      description:
+        "Conecta productos en tiendas físicas con contenido digital, ofertas especiales y verificación de autenticidad en tiempo real.",
+      color: "blue",
     },
     {
       icon: Database,
       title: "Cadena de Suministro",
-      description: "Rastrea productos desde la fabricación hasta el cliente final con transparencia total en la blockchain y trazabilidad completa.",
-      color: "green"
+      description:
+        "Rastrea productos desde la fabricación hasta el cliente final con transparencia total en la blockchain y trazabilidad completa.",
+      color: "green",
     },
     {
       icon: Lock,
       title: "Lujo y Coleccionables",
-      description: "Verifica la autenticidad de productos de lujo y crea colecciones digitales únicas para tus clientes con certificación blockchain.",
-      color: "purple"
-    }
+      description:
+        "Verifica la autenticidad de productos de lujo y crea colecciones digitales únicas para tus clientes con certificación blockchain.",
+      color: "purple",
+    },
   ];
 
   const containerVariants = {
@@ -32,9 +35,9 @@ export function UseCasesSection() {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
+        delayChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
@@ -43,9 +46,9 @@ export function UseCasesSection() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6
-      }
-    }
+        duration: 0.6,
+      },
+    },
   };
 
   const fadeInUp = {
@@ -54,14 +57,29 @@ export function UseCasesSection() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8
-      }
-    }
+        duration: 0.8,
+      },
+    },
   };
 
   return (
-    <div className="w-full px-4 py-32 bg-gradient-to-b from-background to-gray-900">
-      <motion.div 
+    <div className="w-full px-4 py-32 bg-gradient-to-b from-background to-gray-900 relative overflow-hidden">
+      {/* QR Code Inspired Squares */}
+      <div className="absolute top-20 left-20 w-3 h-3 bg-white/20 animate-bounce"></div>
+      <div className="absolute top-32 left-32 w-2 h-2 bg-white/15 animate-bounce delay-300"></div>
+      <div className="absolute top-40 left-16 w-4 h-4 bg-white/10 animate-bounce delay-600"></div>
+      <div className="absolute top-16 left-40 w-2 h-2 bg-white/20 animate-bounce delay-900"></div>
+
+      <div className="absolute bottom-20 right-20 w-3 h-3 bg-white/20 animate-bounce delay-200"></div>
+      <div className="absolute bottom-32 right-32 w-2 h-2 bg-white/15 animate-bounce delay-500"></div>
+      <div className="absolute bottom-40 right-16 w-4 h-4 bg-white/10 animate-bounce delay-800"></div>
+      <div className="absolute bottom-16 right-40 w-2 h-2 bg-white/20 animate-bounce delay-1100"></div>
+
+      <div className="absolute top-1/3 right-1/4 w-2 h-2 bg-white/15 animate-bounce delay-400"></div>
+      <div className="absolute top-2/3 left-1/3 w-3 h-3 bg-white/20 animate-bounce delay-700"></div>
+      <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-white/10 animate-bounce delay-1000"></div>
+
+      <motion.div
         className="text-center mb-20 w-full space-y-4"
         initial="hidden"
         whileInView="visible"
@@ -85,7 +103,7 @@ export function UseCasesSection() {
       </motion.div>
 
       {/* Simple Use Cases Layout */}
-      <motion.div 
+      <motion.div
         className="max-w-6xl mx-auto"
         initial="hidden"
         whileInView="visible"
@@ -98,25 +116,27 @@ export function UseCasesSection() {
             const colorClasses = {
               blue: "text-blue-500",
               green: "text-green-500",
-              purple: "text-purple-500"
+              purple: "text-purple-500",
             };
-            
+
             return (
-              <motion.div 
-                key={useCase.title} 
+              <motion.div
+                key={useCase.title}
                 className="text-center group"
                 variants={itemVariants}
               >
                 <div className="mb-8">
                   <div className="w-20 h-20 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 border border-white/20">
-                    <IconComponent className={`w-10 h-10 ${colorClasses[useCase.color as keyof typeof colorClasses]}`} />
+                    <IconComponent
+                      className={`w-10 h-10 ${colorClasses[useCase.color as keyof typeof colorClasses]}`}
+                    />
                   </div>
                 </div>
-                
+
                 <h3 className="text-2xl font-bold text-foreground mb-4">
                   {useCase.title}
                 </h3>
-                
+
                 <p className="text-muted-foreground leading-relaxed">
                   {useCase.description}
                 </p>

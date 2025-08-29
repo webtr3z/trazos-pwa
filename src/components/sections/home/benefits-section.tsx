@@ -41,7 +41,22 @@ export function BenefitsSection() {
   };
 
   return (
-    <div className="w-full px-4 py-32 bg-gradient-to-b from-background to-gray-950">
+    <div className="w-full px-4 py-32 bg-gradient-to-b from-background to-gray-950 relative overflow-hidden">
+      {/* QR Code Inspired Squares */}
+      <div className="absolute top-20 left-20 w-3 h-3 bg-white/20 animate-bounce"></div>
+      <div className="absolute top-32 left-32 w-2 h-2 bg-white/15 animate-bounce delay-300"></div>
+      <div className="absolute top-40 left-16 w-4 h-4 bg-white/10 animate-bounce delay-600"></div>
+      <div className="absolute top-16 left-40 w-2 h-2 bg-white/20 animate-bounce delay-900"></div>
+
+      <div className="absolute bottom-20 right-20 w-3 h-3 bg-white/20 animate-bounce delay-200"></div>
+      <div className="absolute bottom-32 right-32 w-2 h-2 bg-white/15 animate-bounce delay-500"></div>
+      <div className="absolute bottom-40 right-16 w-4 h-4 bg-white/10 animate-bounce delay-800"></div>
+      <div className="absolute bottom-16 right-40 w-2 h-2 bg-white/20 animate-bounce delay-1100"></div>
+
+      <div className="absolute top-1/3 right-1/4 w-2 h-2 bg-white/15 animate-bounce delay-400"></div>
+      <div className="absolute top-2/3 left-1/3 w-3 h-3 bg-white/20 animate-bounce delay-700"></div>
+      <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-white/10 animate-bounce delay-1000"></div>
+
       <motion.div
         className="text-center mb-20 w-full space-y-4"
         initial="hidden"
