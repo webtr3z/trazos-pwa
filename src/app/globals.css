@@ -53,6 +53,9 @@
     --sidebar-accent-foreground: #171717;
     --sidebar-border: #e5e5e5;
     --sidebar-ring: #a1a1a1;
+    --gradient-primary: linear-gradient(to right, var(--primary), #a855f7);
+    --gradient-primary-hover: linear-gradient(to right, #8aff7a, #9333ea);
+    --gradient-text: linear-gradient(to right, var(--primary), #a855f7);
     --font-sans:
       ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
@@ -117,6 +120,9 @@
     --sidebar-accent-foreground: #fafafa;
     --sidebar-border: #282828;
     --sidebar-ring: #525252;
+    --gradient-primary: linear-gradient(to right, var(--primary), #a855f7);
+    --gradient-primary-hover: linear-gradient(to right, #8aff7a, #9333ea);
+    --gradient-text: linear-gradient(to right, var(--primary), #a855f7);
     --font-sans:
       ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
@@ -149,5 +155,22 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .bg-gradient-primary-hover {
+    background: var(--gradient-primary-hover);
+  }
+  
+  .text-gradient {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }

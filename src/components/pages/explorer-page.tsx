@@ -217,7 +217,7 @@ export default function ExplorerPage() {
                         className="w-full font-medium"
                       >
                         <Link
-                          href={`/explorer/${product.id}`}
+                          href={`/explorer/product/${product.id}`}
                           className="flex items-center justify-center gap-2"
                         >
                           Ver Detalles

@@ -2,37 +2,52 @@ import { getProduct } from "@/engine/get-product";
 import { getTotalSupply } from "@/engine/get-total-supply";
 import { nextTokenToMint } from "@/engine/next-token-to-mint";
 import { Product } from "@/types/product";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 export const useProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [productUrls, setProductUrls] = useState<string[]>([]);
   const [productsLoading, setProductsLoading] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     setProductsLoading(true);
     try {
+      // Clear existing URLs first
+      setProductUrls([]);
+
       const supply = await getTotalSupply();
+      const newProductUrls: string[] = [];
+
       for (let i = 0; i < supply; i++) {
         const productUrl = await getProduct(i.toString());
-        setProductUrls((prev) => [...prev, productUrl]);
+        newProductUrls.push(productUrl);
       }
+
+      // Set all URLs at once
+      setProductUrls(newProductUrls);
     } catch (error) {
       console.error("Error fetching products:", error);
+      setProductsLoading(false);
     }
-  };
-
-  const refreshProducts = async () => {
-    setProductUrls([]);
-    setProducts([]);
-    setProductsLoading(true);
-    await fetchProducts();
-  };
-
-  useEffect(() => {
-    fetchProducts();
   }, []);
 
+  const refreshProducts = useCallback(async () => {
+    setProducts([]);
+    setProductUrls([]);
+    setProductsLoading(true);
+    await fetchProducts();
+  }, [fetchProducts]);
+
+  // Initial fetch - only run once
+  useEffect(() => {
+    if (!isInitialized) {
+      fetchProducts();
+      setIsInitialized(true);
+    }
+  }, [fetchProducts, isInitialized]);
+
+  // Fetch product data when URLs change
   useEffect(() => {
     if (productUrls && productUrls.length > 0) {
       const fetchAllProducts = async () => {

@@ -106,9 +106,7 @@ export function HeroSection() {
           {/* Enhanced Main Headline */}
           <motion.div className="space-y-8" variants={headlineVariants}>
             <h1 className="text-[200px] font-black text-foreground leading-[0.9] tracking-tight">
-              <span className="bg-gradient-to-r from-primary  to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
-                # trazos
-              </span>
+              <span className="text-gradient drop-shadow-lg"># trazos</span>
             </h1>
 
             {/* Subtitle with enhanced styling */}
@@ -160,7 +158,7 @@ export function HeroSection() {
             <Button
               size="xl"
               onClick={handleRedirect}
-              className="group bg-gradient-to-r from-primary to-purple-500 hover:from-primary/90 hover:to-purple-600/90 text-primary-foreground px-10 py-4 text-lg font-bold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:scale-105"
+              className="group bg-gradient-primary hover:bg-gradient-primary-hover text-primary-foreground px-10 py-4 text-lg font-bold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:scale-105"
             >
               Comenzar Ahora
               <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform duration-300" />

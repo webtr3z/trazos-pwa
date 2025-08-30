@@ -57,7 +57,7 @@ export function FeaturesSection() {
 
         <h2 className="text-7xl max-w-[70%] mx-auto font-bold text-primary-foreground leading-tight">
           Todo lo que necesitas para{" "}
-          <span className="bg-gradient-to-r from-purple-950 to-purple-500 bg-clip-text text-transparent drop-shadow-lg">
+          <span className="text-purple-500 drop-shadow-lg">
             digitalizar tus productos
           </span>
         </h2>
@@ -77,71 +77,6 @@ export function FeaturesSection() {
       >
         <AppFeatures />
       </motion.div>
-
-      {/* Simple Feature List */}
-      {/* <motion.div
-        className="mt-20 max-w-4xl mx-auto"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={containerVariants}
-      >
-        <div className="space-y-6">
-          <motion.div
-            className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6"
-            variants={itemVariants}
-          >
-            <div className="flex items-center gap-6">
-              <div className="w-3 h-3 bg-background rounded-full"></div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-background mb-2">
-                  Escaneo Instantáneo
-                </h3>
-                <p className="text-background/80">
-                  Cualquier smartphone puede escanear y acceder inmediatamente a
-                  la información del producto.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6"
-            variants={itemVariants}
-          >
-            <div className="flex items-center gap-6">
-              <div className="w-3 h-3 bg-background rounded-full"></div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-background mb-2">
-                  PDP Directo
-                </h3>
-                <p className="text-background/80">
-                  Redirección automática a la página digital del producto con
-                  toda la información verificable.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6"
-            variants={itemVariants}
-          >
-            <div className="flex items-center gap-6">
-              <div className="w-3 h-3 bg-background rounded-full"></div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-background mb-2">
-                  Verificación en Tiempo Real
-                </h3>
-                <p className="text-background/80">
-                  Autenticidad verificable instantáneamente en la blockchain
-                  para máxima confianza.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </motion.div> */}
     </div>
   );
 }
