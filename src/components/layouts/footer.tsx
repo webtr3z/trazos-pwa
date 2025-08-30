@@ -35,7 +35,8 @@ export function Footer() {
               </span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              El futuro de tus productos. Tokeniza y autentica tus productos con blockchain y códigos QR únicos.
+              El futuro de tus productos. Tokeniza y autentica tus productos con
+              blockchain y códigos QR únicos.
             </p>
             <div className="flex space-x-3">
               <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
@@ -60,17 +61,34 @@ export function Footer() {
             <h3 className="font-semibold text-foreground">Producto</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/explorer" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/explorer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Explorar Productos
                 </Link>
               </li>
               <li>
-                <Link href="/mint-token" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/mint-token"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Mintear Token
                 </Link>
               </li>
               <li>
-                <Link href="/gated-content" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/pricing"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Precios
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/gated-content"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Contenido Exclusivo
                 </Link>
               </li>
@@ -87,17 +105,26 @@ export function Footer() {
             <h3 className="font-semibold text-foreground">Empresa</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/about"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Acerca de
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/contact"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Contacto
                 </Link>
               </li>
               <li>
-                <Link href="/careers" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/careers"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Carreras
                 </Link>
               </li>
@@ -114,17 +141,26 @@ export function Footer() {
             <h3 className="font-semibold text-foreground">Tecnología</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/docs" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/docs"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Documentación
                 </Link>
               </li>
               <li>
-                <Link href="/api" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/api"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   API
                 </Link>
               </li>
               <li>
-                <Link href="/status" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/status"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Estado del Sistema
                 </Link>
               </li>
@@ -148,13 +184,22 @@ export function Footer() {
 
           {/* Legal Links */}
           <div className="flex space-x-6 text-sm">
-            <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/privacy"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Privacidad
             </Link>
-            <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/terms"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Términos
             </Link>
-            <Link href="/cookies" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/cookies"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Cookies
             </Link>
           </div>
