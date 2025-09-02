@@ -13,26 +13,26 @@ export function HeroSection() {
     router.replace("/dashboard/home");
   };
 
-  // Animation variants
+  // Enhanced animation variants with sophisticated text motion
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.15,
         delayChildren: 0.1,
       },
     },
   };
 
   const headlineVariants = {
-    hidden: { opacity: 0, y: 100, scale: 0.95 },
+    hidden: { opacity: 0, y: 120, scale: 0.9 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
-        duration: 1.2,
+        duration: 1.4,
       },
     },
   };
@@ -105,15 +105,38 @@ export function HeroSection() {
 
           {/* Enhanced Main Headline */}
           <motion.div className="space-y-8" variants={headlineVariants}>
-            <h1 className="text-[200px] font-black text-foreground leading-[0.9] tracking-tight">
-              <span className="text-gradient drop-shadow-lg"># trazos</span>
-            </h1>
+            <motion.div
+              className="flex items-center justify-center ml-[-40px] text-[200px] font-black text-foreground leading-[0.9] tracking-tight"
+              initial={{ opacity: 0, y: 150, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1.6, delay: 0.3 }}
+            >
+              {/* <motion.span
+                className="text-gradient drop-shadow-lg"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.2, delay: 0.8 }}
+              >
+                # trazos
+              </motion.span> */}
+              <Image
+                src="/images/trazos-t-color.svg"
+                alt="Trazos"
+                width={600}
+                height={100}
+              />
+            </motion.div>
 
             {/* Subtitle with enhanced styling */}
-            <p className="text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-medium">
+            <motion.p
+              className="text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-medium"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.0, delay: 1.2 }}
+            >
               Tokeniza y autentica tus productos y conviértelos en activos
               digitales verificables con blockchain y códigos QR únicos.
-            </p>
+            </motion.p>
           </motion.div>
 
           {/* Enhanced Key Benefits */}
@@ -153,16 +176,24 @@ export function HeroSection() {
           {/* Enhanced CTA Buttons */}
           <motion.div
             className="pt-12 flex flex-col sm:flex-row gap-6 justify-center"
-            variants={buttonVariants}
+            initial={{ opacity: 0, y: 60, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.0, delay: 1.5 }}
           >
-            <Button
-              size="xl"
-              onClick={handleRedirect}
-              className="group bg-gradient-primary hover:bg-gradient-primary-hover text-primary-foreground px-10 py-4 text-lg font-bold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:scale-105"
+            <motion.div
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              Comenzar Ahora
-              <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform duration-300" />
-            </Button>
+              <Button
+                size="xl"
+                onClick={handleRedirect}
+                className="group bg-gradient-primary hover:bg-gradient-primary-hover text-primary-foreground px-10 py-4 text-lg font-bold shadow-2xl hover:shadow-primary/25 transition-all duration-300"
+              >
+                Comenzar Ahora
+                <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform duration-300" />
+              </Button>
+            </motion.div>
           </motion.div>
 
           {/* Enhanced Trust Indicators */}

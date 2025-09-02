@@ -21,10 +21,10 @@ export function TopNavbar() {
         <div className="flex items-center justify-between h-14">
           <div className="flex items-center w-full">
             <Image
-              src="/images/trazos.svg"
+              src="/images/t.svg"
               alt="Logo"
-              width={40}
-              height={40}
+              width={32}
+              height={32}
               className=""
             />
           </div>
