@@ -120,9 +120,14 @@
     --sidebar-accent-foreground: #fafafa;
     --sidebar-border: #282828;
     --sidebar-ring: #525252;
-    --gradient-primary: linear-gradient(to right, var(--primary), #a855f7);
-    --gradient-primary-hover: linear-gradient(to right, #8aff7a, #9333ea);
-    --gradient-text: linear-gradient(to right, var(--primary), #a855f7);
+    --gradient-primary: linear-gradient(
+      to right,
+      var(--primary),
+      #97d88f 50%,
+      #a855f7 150%
+    );
+    --gradient-primary-hover: linear-gradient(to right, #9333ea);
+    --gradient-text: linear-gradient(to right, var(--primary), #a855f7 150%);
     --font-sans:
       ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
@@ -162,11 +167,11 @@
   .bg-gradient-primary {
     background: var(--gradient-primary);
   }
-  
+
   .bg-gradient-primary-hover {
     background: var(--gradient-primary-hover);
   }
-  
+
   .text-gradient {
     background: var(--gradient-text);
     -webkit-background-clip: text;
